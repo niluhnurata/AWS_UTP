@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://localhost/soapAPI_saving/server.php"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://localhost/soapAPI_saving/server.php"
+             name="TicketsService">
+
+    <types>
+        <xsd:schema targetNamespace="http://localhost/soapAPI_saving/server.php">
+            <!-- Request untuk membeli tiket -->
+            <xsd:element name="buyTicketRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Tidak perlu parameter untuk buyTicket -->
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="buyTicketResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:boolean"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="ticket" type="xsd:string"/>
+                        <xsd:element name="cashback" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Request dan response untuk membuat tiket baru -->
+           <xsd:element name="createTicketRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ticketType" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="createTicketResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ticketId" type="xsd:int"/>
+                        <xsd:element name="ticketStatus" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <!-- Pesan untuk operasi buyTicket -->
+    <message name="buyTicketRequest">
+        <part name="parameters" element="tns:buyTicketRequest"/>
+    </message>
+
+    <message name="buyTicketResponse">
+        <part name="parameters" element="tns:buyTicketResponse"/>
+    </message>
+
+    <!-- Pesan untuk operasi createTicket -->
+    <message name="createTicketRequest">
+        <part name="parameters" element="tns:createTicketRequest"/>
+    </message>
+
+    <message name="createTicketResponse">
+        <part name="parameters" element="tns:createTicketResponse"/>
+    </message>
+
+    <!-- PortType untuk layanan TicketsService -->
+    <portType name="TicketsServicePortType">
+        <operation name="buyTicket">
+            <input message="tns:buyTicketRequest"/>
+            <output message="tns:buyTicketResponse"/>
+        </operation>
+        <operation name="createTicket">
+            <input message="tns:createTicketRequest"/>
+            <output message="tns:createTicketResponse"/>
+        </operation>
+    </portType>
+
+    <!-- Binding untuk TicketsService -->
+    <binding name="TicketsServiceBinding" type="tns:TicketsServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="buyTicket">
+            <soap:operation soapAction="http://localhost/soapAPI_saving/server.php#buyTicket"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="createTicket">
+            <soap:operation soapAction="http://localhost/soapAPI_saving/server.php#createTicket"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Definisi service untuk TicketsService -->
+    <service name="TicketsService">
+        <port name="TicketsServicePort" binding="tns:TicketsServiceBinding">
+            <soap:address location="http://localhost/soapAPI_saving/server.php"/>
+        </port>
+    </service>
+</definitions>
