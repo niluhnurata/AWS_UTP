@@ -1,7 +1,7 @@
 <?php
 $host = "database-niluh.cpmv586harxf.us-east-1.rds.amazonaws.com";
 $port = 3306;
-$dbname = "database-niluh";
+$dbname = "database-niluhnurata";
 $username = "admin";
 $password = "NiluhNurata04";
 
